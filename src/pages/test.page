@@ -1,0 +1,38 @@
+<apex:page controller="test">
+    <apex:sectionHeader title="Contact Manager"/>
+    <apex:form>
+        <apex:pageBlock title="Contact Manager" id="pageBlock">
+            <apex:pageBlockTable value="{!Contacts}" var="cont">
+                <apex:column>
+                    <apex:facet name="header">
+
+                        <apex:commandLink action="{!ViewData}"
+                                          value="Name{!IF(sortExpression=='name',IF(sortDirection='ASC','▼','▲'),'')}"
+                                          id="cmdSort">
+                            <apex:param value="name" name="column" assignTo="{!sortExpression}"/>
+                        </apex:commandLink>
+
+                    </apex:facet>
+                    <apex:outputLink value="/{!cont.Id}" target="_blank">{!cont.Name}</apex:outputLink>
+                </apex:column>
+                <apex:column value="{!cont.Email}"/>
+                <apex:column value="{!cont.Level__c}"/>
+                <apex:column value="{!cont.account.Name}"/>
+                <apex:column value="{!cont.owner.id}"/>
+                <apex:column value="{!cont.CreatedById}"/>
+                <apex:column value="{!cont.CreatedDate}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:form>
+        <apex:pageBlock>
+                <div align="left-center" style="position: relative ;left: 23%">
+                    <apex:commandButton value="<<" reRender="PagingBar" action="{!beginning}" disabled="{!prev}"/>
+                    <apex:commandButton value="<" reRender="PagingBar" action="{!previous}" disabled="{!prev}"/>
+                    <apex:commandButton value=">" reRender="PagingBar" action="{!next}" disabled="{!nxt}"/>
+                    <apex:commandButton value=">>" reRender="PagingBar" action="{!end}" disabled="{!nxt}"/>
+                </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
+
